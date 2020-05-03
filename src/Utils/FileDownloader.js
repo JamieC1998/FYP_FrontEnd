@@ -1,0 +1,20 @@
+import Axios from "axios";
+
+const getFile = (filename, url, id) => {
+
+    Axios({
+        url: `${url}/${id}`, //your url
+        method: 'GET',
+        responseType: 'blob', // important
+    }).then((response) => {
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+    });
+}
+
+export default getFile;
